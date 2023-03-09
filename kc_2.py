@@ -51,3 +51,5 @@ arrivals_tmp.rename(columns={
     'Delay Late Aircraft Arrival (Minutes)' : 'delay_late_arrival'
    
 },inplace=True)
+
+arrivals.head()
