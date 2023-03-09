@@ -31,7 +31,7 @@ arrivals_tmp = arrivals.drop_duplicates()
 """
 
 arrivals_tmp.rename(columns={
-    'ID' : 'id', 
+    'ID' : 'airline', 
     'Carrier Code' : 'carrier_code',
     'Date (MM/DD/YYYY)' : 'flight_date', 
     'Flight Number' : 'flight_number', 
