@@ -2,54 +2,12 @@ import pandas as pd
 import matplotlib 
 from matplotlib import pyplot as plt
 
-arrivals = pd.read_csv('assets/arrivals.csv')
-print(arrivals.head())
+data = pd.read_csv('assets/SouthwestArrivals.csv')
 
-arrivals_tmp = arrivals.drop_duplicates()
-
-"""
-
-    id 
-    carrier_code 
-    flight_date 
-    flight_number 
-    tail_number
-    origin
-    sched_arr_time 
-    act_arr_time 
-    sch_elapsed
-    act_elapsed
-    arr_delay 
-    wheels_on 
-    taxi_in 
-    delay_carrier
-    delay_weather 
-    delay_natavsys 
-    delay_security
-    delay_late_arrival
-
-"""
-
-arrivals_tmp.rename(columns={
-    'ID' : 'airline', 
-    'Carrier Code' : 'carrier_code',
-    'Date (MM/DD/YYYY)' : 'flight_date', 
-    'Flight Number' : 'flight_number', 
-    'Tail Number' : 'tail_number',
-    'Origin Airport' : 'origin', 
-    'Scheduled Arrival Time' : 'sched_arr_time', 
-    'Actual Arrival Time' : 'act_arr_time',     
-    'Scheduled Elapsed Time (Minutes)' : 'sch_elapsed', 
-    'Actual Elapsed Time (Minutes)' : 'act_elapsed',   
-    'Arrival Delay (Minutes)' : 'arr_delay', 
-    'Wheels-on Time' : 'wheels_on', 
-    'Taxi-In time (Minutes)' : 'taxi_in', 
-    'Delay Carrier (Minutes)' : 'delay_carrier', 
-    'Delay Weather (Minutes)' : 'delay_weather',
-    'Delay National Aviation System (Minutes)'  : 'delay_natavsys',
-    'Delay Security (Minutes)' : 'delay_security',
-    'Delay Late Aircraft Arrival (Minutes)' : 'delay_late_arrival'
-   
-},inplace=True)
-
-arrivals.head()
+data['date'] = pd.to_datetime(data[['year', 'month']].assign(day=1))
+data = data.groupby(['date'])['total'].sum().reset_index()
+data.plot(x='date', y='total', kind='line')
+plt.xlabel('Year-Month')
+plt.ylabel('Total')
+plt.title('Southwest Total SDF arrivals by Year-Month')
+plt.show()
